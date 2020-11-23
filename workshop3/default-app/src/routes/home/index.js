@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import uuid from 'uuid/v4'
+import Form from '../../components/form/index.js'
 import List from '../../components/list/index.js'
 import style from './style.css';
 
