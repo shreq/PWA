@@ -1,21 +1,10 @@
-import {skipWaiting, clientsClaim} from 'workbox-core';
-import {precacheAndRoute} from 'workbox-precaching';
-import {registerRoute, NavigationRoute} from 'workbox-routing';
-import {CacheFirst, NetworkFirst} from 'workbox-strategies';
+import {getFiles, setupPrecaching, setupRouting} from 'preact-cli/sw'
 
-skipWaiting();
-clientsClaim();
+setupRouting();
 
-registerRoute(
-    new RegExp(/\.(?:png|gif|jpg|svg|ico|webp)$/),
-    new CacheFirst({
-        cacheName: 'image-cache',
-    }),
-    'GET'
-);
+const urlsToCache = getFiles();
+urlsToCache.push({
+    url: '/favicon.ico', revision: null
+});
 
-precacheAndRoute(self.__WB_MANIFEST);
-
-self.addEventListener('install', event => console.log('SW installed', event));
-
-
+setupPrecaching(urlsToCache);
